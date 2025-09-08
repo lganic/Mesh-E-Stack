@@ -1,4 +1,4 @@
-from tagged_object import TaggedObject
+from .tagged_object import TaggedObject
 from typing import Any
 
 class Vertex(TaggedObject):
