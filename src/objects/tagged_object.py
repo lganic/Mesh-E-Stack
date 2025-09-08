@@ -12,3 +12,7 @@ class TaggedObject:
             raise TypeError("Unrecognized object to compare")
 
         return self.id == other.id
+
+    def __hash__(self):
+
+        return self.id.__hash__()
