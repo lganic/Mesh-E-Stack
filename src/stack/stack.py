@@ -6,15 +6,15 @@ from .. import Event
 
 class Stack:
 
-    def __init__(self, mesh_reference: Mesh = None):
+    def __init__(self, mesh: Mesh = None):
 
         self.undo_stack = deque()
         self.redo_stack = deque()
 
-        if mesh_reference is None:
-            mesh_reference = Mesh()
+        if mesh is None:
+            mesh = Mesh()
 
-        self.mesh_reference = mesh_reference
+        self.mesh = mesh
 
     def _add_event(self, event: Event):
         self.undo_stack.append(event)
@@ -22,7 +22,7 @@ class Stack:
 
     def delete(self, verts_to_remove: Set[Vertex] = None, tris_to_remove: Set[Triangle] = None, remove_orphaned_verts = True):
 
-        self._add_event(self.mesh_reference.delete_objects(verts_to_remove = verts_to_remove, tris_to_remove = tris_to_remove, remove_orphaned_verts = remove_orphaned_verts))
+        self._add_event(self.mesh.delete_objects(verts_to_remove = verts_to_remove, tris_to_remove = tris_to_remove, remove_orphaned_verts = remove_orphaned_verts))
 
     def undo_event(self, event: Event):
 
@@ -30,7 +30,7 @@ class Stack:
         self.redo_stack.append(event)
 
         if isinstance(event, Event.DeleteEvent):
-            self.mesh_reference.undo_delete(event)
+            self.mesh.undo_delete(event)
 
     def undo(self):
 
