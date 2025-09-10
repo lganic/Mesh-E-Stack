@@ -23,3 +23,22 @@ class Stack:
     def delete(self, verts_to_remove: Set[Vertex] = None, tris_to_remove: Set[Triangle] = None, remove_orphaned_verts = True):
 
         self._add_event(self.mesh_reference.delete_objects(verts_to_remove = verts_to_remove, tris_to_remove = tris_to_remove, remove_orphaned_verts = remove_orphaned_verts))
+
+    def undo_event(self, event: Event):
+
+        # Add the object to the redo stack
+        self.redo_stack.append(event)
+
+        if isinstance(event, Event.DeleteEvent):
+            self.mesh_reference.undo_delete(event)
+
+    def undo(self):
+
+        if len(self.undo_stack) == 0:
+            # Nothing left to undo. Do nothing. 
+
+            return
+
+        event = self.undo_stack.pop()
+
+        self.undo_event(event)
