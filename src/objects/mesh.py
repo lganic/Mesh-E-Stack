@@ -89,3 +89,12 @@ class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be 
         return DeleteEvent(verts_to_remove, tris_to_remove)
 
         # TODO : Remove orphaned verts if flagged to do so. 
+    
+    def undo_delete(self, delete_event: DeleteEvent):
+
+        '''
+        Undo a deletion event, when given the event itself. 
+        '''
+
+        self.verts = self.verts.union(delete_event._verts)
+        self.tris = self.tris.union(delete_event._tris)
