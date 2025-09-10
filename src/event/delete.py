@@ -3,6 +3,7 @@ from typing import Set
 from .event import Event
 from ..objects import Vertex, Triangle
 from .mod_types import ModType
+from .invert import invert_diff
 
 class DeleteEvent(Event):
 
@@ -29,3 +30,9 @@ class DeleteEvent(Event):
             diff.append((ModType.DELETE, tri))
         
         return diff
+    
+    def inverted_diff(self):
+        
+        forward_diff = self.diff()
+
+        return invert_diff(forward_diff)

@@ -26,7 +26,7 @@ class Stack:
 
         self._add_event(new_event)
 
-        return new_event
+        return new_event.diff()
 
     def undo_event(self, event: Event):
 
@@ -43,6 +43,10 @@ class Stack:
 
             return
 
+        event: Event.Event
+
         event = self.undo_stack.pop()
 
         self.undo_event(event)
+
+        return event.inverted_diff()

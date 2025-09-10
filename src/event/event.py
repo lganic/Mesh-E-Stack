@@ -4,4 +4,7 @@ from .mod_types import ModType
 class Event:
 
     def diff(self) -> List[Tuple[ModType, Any]]:
-        return NotImplementedError()
+        raise NotImplementedError()
+    
+    def inverted_diff(self) -> List[Tuple[ModType, Any]]:
+        raise NotImplementedError()
