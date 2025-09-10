@@ -2,7 +2,7 @@ from typing import List, Tuple, Any, Set
 from .tagged_object import TaggedObject
 from .triangle import Triangle
 from .vertex import Vertex
-from ..events import DeleteEvent
+from ..event import DeleteEvent
 
 class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be useful later
 
