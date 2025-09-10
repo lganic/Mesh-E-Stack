@@ -20,3 +20,11 @@ class Triangle(TaggedObject):
         index_3 = vertex_list.index(self.vertex_3)
 
         return (index_1, index_2, index_3)
+    
+    def uses_vertex(self, vertex: Vertex):
+
+        '''
+        Return true if this triangle uses the specified vertex
+        '''
+
+        return self.vertex_1 == vertex or self.vertex_2 == vertex or self.vertex_3 == vertex
