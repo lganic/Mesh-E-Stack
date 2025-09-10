@@ -9,8 +9,8 @@ class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be 
 
         super().__init__()
 
-        self._verts: Set[Vertex] = set()
-        self._tris: Set[Triangle] = set()
+        self.verts: Set[Vertex] = set()
+        self.tris: Set[Triangle] = set()
 
         self.emplace_mesh(initial_verts, initial_tris)
     
@@ -19,8 +19,8 @@ class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be 
         Replace the contents of the mesh with the new mesh specified.
         '''
 
-        self._verts.clear()
-        self._tris.clear()
+        self.verts.clear()
+        self.tris.clear()
 
         vert_list = []
 
@@ -36,16 +36,18 @@ class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be 
                 vert_list[tri_3],
             )
 
-            self._tris.add(triangle_obj)
+            self.tris.add(triangle_obj)
         
-        self._verts.update(vert_list)
+        self.verts.update(vert_list)
     
     def fetch_mesh(self):
         '''
         Compile, and return the list of verts and tris current contained. 
         '''
 
-        all_verts = list(self._verts)
-        all_tris = [tri.bake_from_vert_list(all_verts) for tri in self._tris]
+        all_verts = list(self.verts)
+        all_tris = [tri.bake_from_vert_list(all_verts) for tri in self.tris]
 
-        return all_verts, all_tris    
+        return all_verts, all_tris
+    
+    def locate_vert(self, location):
