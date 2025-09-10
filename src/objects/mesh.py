@@ -51,3 +51,14 @@ class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be 
         return all_verts, all_tris
     
     def locate_vert(self, location):
+
+        '''find the vert that has the exact location specified.
+        
+        I wouldn't recommend using this, its more for easier testing.'''
+
+        for vert in self.verts:
+
+            if vert.location == location:
+                return vert
+        
+        return None
