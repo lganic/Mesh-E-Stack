@@ -35,6 +35,6 @@ class Triangle(TaggedObject):
         Return true if this triangle uses any of a specified set of vertices
         '''
 
-        vertset = set(self.vertex_1, self.vertex_2, self.vertex_3)
+        vertset = set((self.vertex_1, self.vertex_2, self.vertex_3))
 
         return len(vertset.intersection(set_of_verts)) > 0
