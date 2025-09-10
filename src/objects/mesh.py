@@ -98,3 +98,17 @@ class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be 
 
         self.verts = self.verts.union(delete_event._verts)
         self.tris = self.tris.union(delete_event._tris)
+    
+    def redo_delete(self, delete_event: DeleteEvent):
+
+        '''
+        Redo a deletion event, when given the event itself. 
+        '''
+
+        # We don't need to do any fancy checks this time, since that was done when the event was intitially generated. 
+
+        for vert in delete_event._verts:
+            self.verts.remove(vert)
+
+        for tri in delete_event._tris:
+            self.tris.remove(tri)
