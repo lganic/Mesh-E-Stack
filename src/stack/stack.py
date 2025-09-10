@@ -8,7 +8,8 @@ class Stack:
 
     def __init__(self, mesh_reference: Mesh = None):
 
-        self.events = deque()
+        self.undo_stack = deque()
+        self.redo_stack = deque()
 
         if mesh_reference is None:
             mesh_reference = Mesh()
@@ -16,7 +17,8 @@ class Stack:
         self.mesh_reference = mesh_reference
 
     def _add_event(self, event: Event):
-        self.events.append(event)
+        self.undo_stack.append(event)
+        self.redo_stack.clear()
 
     def delete(self, verts_to_remove: Set[Vertex] = None, tris_to_remove: Set[Triangle] = None, remove_orphaned_verts = True):
 
