@@ -1,7 +1,7 @@
 from .tagged_object import TaggedObject
 from .vertex import Vertex
 
-from typing import List
+from typing import List, Set
 
 class Triangle(TaggedObject):
 
@@ -28,3 +28,13 @@ class Triangle(TaggedObject):
         '''
 
         return self.vertex_1 == vertex or self.vertex_2 == vertex or self.vertex_3 == vertex
+    
+    def uses_these_verts(self, set_of_verts: Set[Vertex]):
+
+        '''
+        Return true if this triangle uses any of a specified set of vertices
+        '''
+
+        vertset = set(self.vertex_1, self.vertex_2, self.vertex_3)
+
+        return len(vertset.intersection(set_of_verts)) > 0
