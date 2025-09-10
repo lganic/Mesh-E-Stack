@@ -2,6 +2,7 @@ from typing import List, Tuple, Any, Set
 from .tagged_object import TaggedObject
 from .triangle import Triangle
 from .vertex import Vertex
+from ..events import DeleteEvent
 
 class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be useful later
 
@@ -62,3 +63,29 @@ class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be 
                 return vert
         
         return None
+    
+    def delete_objects(self, verts_to_remove: Set[Vertex] = None, tris_to_remove: Set[Triangle] = None, remove_orphaned_verts = True):
+
+        '''
+        Delete some objects, and return the corresponding event. 
+        '''
+
+        if verts_to_remove is None:
+            verts_to_remove = set()
+
+        if tris_to_remove is None:
+            tris_to_remove = set()
+
+        for vert in verts_to_remove:
+            self.verts.remove(vert)
+
+        for tri in self.tris:
+            if tri.uses_these_verts(verts_to_remove):
+                tris_to_remove.add(tri)
+
+        for tri in tris_to_remove:
+            self.tris.remove(tri)
+
+        return DeleteEvent(verts_to_remove, tris_to_remove)
+
+        # TODO : Remove orphaned verts if flagged to do so. 
