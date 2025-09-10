@@ -2,7 +2,7 @@ from collections import deque
 from typing import Set
 
 from ..objects import Mesh, Vertex, Triangle
-from .. import Event
+from .. import event as Event
 
 class Stack:
 
