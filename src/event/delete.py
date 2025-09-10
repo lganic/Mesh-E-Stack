@@ -2,6 +2,7 @@ from typing import Set
 
 from .event import Event
 from ..objects import Vertex, Triangle
+from .mod_types import ModType
 
 class DeleteEvent(Event):
 
@@ -16,3 +17,15 @@ class DeleteEvent(Event):
         
         self._verts = verts
         self._tris = tris
+    
+    def diff(self):
+
+        diff = []
+
+        for vert in self._verts:
+            diff.append((ModType.DELETE, vert))
+        
+        for tri in self._tris:
+            diff.append((ModType.DELETE, tri))
+        
+        return diff
