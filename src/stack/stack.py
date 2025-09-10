@@ -22,7 +22,11 @@ class Stack:
 
     def delete(self, verts_to_remove: Set[Vertex] = None, tris_to_remove: Set[Triangle] = None, remove_orphaned_verts = True):
 
-        self._add_event(self.mesh.delete_objects(verts_to_remove = verts_to_remove, tris_to_remove = tris_to_remove, remove_orphaned_verts = remove_orphaned_verts))
+        new_event = self.mesh.delete_objects(verts_to_remove = verts_to_remove, tris_to_remove = tris_to_remove, remove_orphaned_verts = remove_orphaned_verts)
+
+        self._add_event(new_event)
+
+        return new_event
 
     def undo_event(self, event: Event):
 
