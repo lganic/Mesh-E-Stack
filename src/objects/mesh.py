@@ -104,5 +104,5 @@ class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be 
 
         # We don't need to do any fancy checks this time, since that was done when the event was intitially generated. 
 
-        self.verts -= delete_event.verts
-        self.tris -= delete_event.tris
+        self.verts -= delete_event._verts
+        self.tris -= delete_event._tris
