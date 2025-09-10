@@ -76,15 +76,12 @@ class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be 
         if tris_to_remove is None:
             tris_to_remove = set()
 
-        for vert in verts_to_remove:
-            self.verts.remove(vert)
-
         for tri in self.tris:
             if tri.uses_these_verts(verts_to_remove):
                 tris_to_remove.add(tri)
 
-        for tri in tris_to_remove:
-            self.tris.remove(tri)
+        self.verts -= verts_to_remove
+        self.tris -= tris_to_remove
 
         return DeleteEvent(verts_to_remove, tris_to_remove)
 
@@ -107,8 +104,5 @@ class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be 
 
         # We don't need to do any fancy checks this time, since that was done when the event was intitially generated. 
 
-        for vert in delete_event._verts:
-            self.verts.remove(vert)
-
-        for tri in delete_event._tris:
-            self.tris.remove(tri)
+        self.verts -= delete_event.verts
+        self.tris -= delete_event.tris
