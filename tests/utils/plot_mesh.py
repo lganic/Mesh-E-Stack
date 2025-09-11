@@ -7,7 +7,7 @@ from .generate_heart import generate_heart
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot_raw_mesh(points, triangles):
+def plot_raw_mesh(points, triangles, show = True):
     """
     Plot a 2D triangular mesh from points and triangle indices.
 
@@ -25,17 +25,19 @@ def plot_raw_mesh(points, triangles):
         ax.plot(tri_points[:, 0], tri_points[:, 1], 'k-')
 
     ax.scatter(points[:, 0], points[:, 1], c='red', zorder=5)
-    plt.show()
+
+    if show:
+        plt.show()
 
     return fig
 
-def plot_mesh(mesh: "Mesh"):
+def plot_mesh(mesh: "Mesh", show = True):
 
     vertices, triangles = mesh.fetch_mesh()
 
     points = [vertex.location for vertex in vertices]
 
-    fig = plot_raw_mesh(points, triangles)
+    fig = plot_raw_mesh(points, triangles, show = show)
 
     return fig
 
