@@ -1,0 +1,1 @@
+python -m pytest --mpl-generate-path=testing_images
