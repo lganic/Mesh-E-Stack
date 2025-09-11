@@ -1,1 +1,3 @@
+@echo off
+echo Running full test suite...
 python -m pytest --mpl --mpl-baseline-path=testing_images --mpl-results-path=test_results --mpl-generate-summary=html

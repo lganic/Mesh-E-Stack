@@ -1,1 +1,3 @@
+@echo off
+echo Generating testing images...
 python -m pytest --mpl-generate-path=testing_images
