@@ -36,6 +36,14 @@ class Stack:
         if isinstance(event, Event.DeleteEvent):
             self.mesh.undo_delete(event)
 
+    def redo_event(self, event: Event):
+
+        # Add the object to the undo stack
+        self.undo_stack.append(event)
+
+        if isinstance(event, Event.DeleteEvent):
+            self.mesh.redo_delete(event)
+
     def undo(self):
 
         if len(self.undo_stack) == 0:
@@ -50,3 +58,18 @@ class Stack:
         self.undo_event(event)
 
         return event.inverted_diff()
+    
+    def redo(self):
+
+        if len(self.redo_stack) == 0:
+            # Nothing to redo. Do nothing. 
+
+            return
+        
+        event: Event.Event
+
+        event = self.redo_stack.pop()
+
+        self.redo_event(event)
+
+        return event.diff()
