@@ -1,0 +1,1 @@
+python -m pytest --mpl --mpl-baseline-path=testing_images --mpl-results-path=test_results --mpl-generate-summary=html
