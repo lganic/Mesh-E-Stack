@@ -27,13 +27,17 @@ def plot_raw_mesh(points, triangles):
     ax.scatter(points[:, 0], points[:, 1], c='red', zorder=5)
     plt.show()
 
+    return fig
+
 def plot_mesh(mesh: "Mesh"):
 
     vertices, triangles = mesh.fetch_mesh()
 
     points = [vertex.location for vertex in vertices]
 
-    plot_raw_mesh(points, triangles)
+    fig = plot_raw_mesh(points, triangles)
+
+    return fig
 
 if __name__ == '__main__':
     
