@@ -41,8 +41,33 @@ def force_cw_order(points):
     
     return points
 
-def force_cw_point_group(polys):
-    return [force_cw_order(group) for group in polys]
+def strict_tri_reordering(points):
+    
+    points = force_cw_order(points)
+
+    flattened_points = [(int(a), int(b)) for a, b in points]
+
+    # Now we get hashes for all points
+    points_hashes = [p.__hash__() for p in flattened_points]
+
+    # Order based on the minimum index.
+    mindex = points_hashes.index(min(points_hashes))
+
+    # Re-order, to put mindex first. 
+
+    if mindex == 0:
+        return points
+    
+    if mindex == 1:
+        return [points[1], points[2], points[0]]
+    
+    if mindex == 2:
+        return [points[2], points[0], points[1]]
+    
+    raise ValueError("??")
+
+def force_strict_ordering(polys):
+    return [strict_tri_reordering(group) for group in polys]
 
 def plot_raw_mesh(points, triangles, show = True):
     """
@@ -57,7 +82,7 @@ def plot_raw_mesh(points, triangles, show = True):
     # Build list of triangle vertex coordinates
     polys = [points[list(tri)] for tri in triangles]
 
-    polys = force_cw_point_group(polys)
+    polys = force_strict_ordering(polys)
 
     fig, ax = plt.subplots()
     ax.set_aspect('equal')
