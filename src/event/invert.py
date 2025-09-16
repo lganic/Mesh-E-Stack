@@ -7,6 +7,9 @@ def invert_modification(modification: Tuple[ModType, Any]):
     if modification[0] == ModType.DELETE:
         return (ModType.ADD, modification[1])
     
+    if modification[0] == ModType.ADD:
+        return (ModType.DELETE, modification[1])
+
     raise TypeError("The modification type is not recognized for inversion")
 
 def invert_diff(diff: List[Tuple[ModType, Any]]):

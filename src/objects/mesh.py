@@ -2,7 +2,7 @@ from typing import List, Tuple, Any, Set
 from .tagged_object import TaggedObject
 from .triangle import Triangle
 from .vertex import Vertex
-from ..event import DeleteEvent
+from ..event import DeleteEvent, AddEvent
 
 class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be useful later
 
@@ -106,3 +106,38 @@ class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be 
 
         self.verts -= delete_event._verts
         self.tris -= delete_event._tris
+    
+    def add_objects(self, verts_to_add: Set[Vertex] = None, tris_to_add: Set[Triangle] = None):
+
+        '''
+        Add some objects, and return the corresponding event. 
+        '''
+
+        if verts_to_add is None:
+            verts_to_add = set()
+
+        if tris_to_add is None:
+            tris_to_add = set()
+
+        self.verts = self.verts.union(verts_to_add)
+        self.tris = self.tris.union(tris_to_add)
+
+        return AddEvent(verts_to_add, tris_to_add)
+    
+    def undo_add(self, add_event: AddEvent):
+
+        '''
+        Undo an addition event, when given the event itself
+        '''
+
+        self.verts -= add_event._verts
+        self.tris -= add_event._tris
+
+    def redo_add(self, add_event: AddEvent):
+        
+        '''
+        Redo an addition event, when given the event itself. 
+        '''
+
+        self.verts = self.verts.union(add_event._verts)
+        self.tris = self.tris.union(add_event._tris)

@@ -27,6 +27,14 @@ class Stack:
         self._add_event(new_event)
 
         return new_event.diff()
+    
+    def add(self, verts_to_add: Set[Vertex] = None, tris_to_add: Set[Triangle] = None):
+
+        new_event = self.mesh.add_objects(verts_to_add = verts_to_add, tris_to_add = tris_to_add)
+
+        self._add_event(new_event)
+
+        return new_event.diff()
 
     def undo_event(self, event: Event):
 
@@ -35,6 +43,9 @@ class Stack:
 
         if isinstance(event, Event.DeleteEvent):
             self.mesh.undo_delete(event)
+        
+        if isinstance(event, Event.AddEvent):
+            self.mesh.undo_add(event)
 
     def redo_event(self, event: Event):
 
@@ -43,6 +54,9 @@ class Stack:
 
         if isinstance(event, Event.DeleteEvent):
             self.mesh.redo_delete(event)
+
+        if isinstance(event, Event.AddEvent):
+            self.mesh.redo_add(event)
 
     def undo(self):
 
