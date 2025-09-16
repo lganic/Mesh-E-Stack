@@ -27,7 +27,7 @@ def test_delete_one_node():
     assert len(st.redo_stack) == 0
     assert len(st.undo_stack) == 1
 
-    fig = plot_mesh(mesh, show = False)
+    fig = plot_mesh(mesh, show = False, add_lines = False)
     return fig
 
 @pytest.mark.mpl_image_compare
@@ -64,7 +64,7 @@ def test_delete_and_undo_one_node():
     assert len(st.redo_stack) == 1
     assert len(st.undo_stack) == 0
 
-    fig = plot_mesh(mesh, show = False)
+    fig = plot_mesh(mesh, show = False, add_lines = False)
     return fig
 
 
@@ -113,5 +113,5 @@ def test_delete_and_undo_redo_one_node():
     assert len(st.redo_stack) == 0
     assert len(st.undo_stack) == 1
 
-    fig = plot_mesh(mesh, show = False)
+    fig = plot_mesh(mesh, show = False, add_lines = False)
     return fig

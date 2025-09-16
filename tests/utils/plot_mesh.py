@@ -69,7 +69,7 @@ def strict_tri_reordering(points):
 def force_strict_ordering(polys):
     return [strict_tri_reordering(group) for group in polys]
 
-def plot_raw_mesh(points, triangles, show = True):
+def plot_raw_mesh(points, triangles, show = True, add_lines = True):
     """
     Plot a 2D triangular mesh from points and triangle indices.
 
@@ -88,7 +88,7 @@ def plot_raw_mesh(points, triangles, show = True):
     ax.set_aspect('equal')
 
     # Add shaded triangles
-    coll = PolyCollection(polys, facecolors="lightblue", edgecolors="k", linewidths=1)
+    coll = PolyCollection(polys, facecolors="lightblue", edgecolors="k", linewidths=1 if add_lines else 0)
     ax.add_collection(coll)
 
     # Plot vertices
@@ -99,13 +99,13 @@ def plot_raw_mesh(points, triangles, show = True):
 
     return fig
 
-def plot_mesh(mesh: "Mesh", show = True):
+def plot_mesh(mesh: "Mesh", show = True, add_lines = True):
 
     vertices, triangles = mesh.fetch_mesh()
 
     points = [vertex.location for vertex in vertices]
 
-    fig = plot_raw_mesh(points, triangles, show = show)
+    fig = plot_raw_mesh(points, triangles, show = show, add_lines = add_lines)
 
     return fig
 

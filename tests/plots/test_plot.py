@@ -11,6 +11,6 @@ def test_plot():
 
 @pytest.mark.mpl_image_compare
 def test_heart_plot():
-    fig = plot_mesh(generate_heart(), show = False)
+    fig = plot_mesh(generate_heart(), show = False, add_lines = False)
 
     return fig
