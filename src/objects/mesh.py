@@ -2,7 +2,7 @@ from typing import List, Tuple, Any, Set
 from .tagged_object import TaggedObject
 from .triangle import Triangle
 from .vertex import Vertex
-from ..event import DeleteEvent, AddEvent
+from ..event import DeleteEvent, AddEvent, ModifyEvent
 
 class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be useful later
 
@@ -141,3 +141,19 @@ class Mesh(TaggedObject): # I don't think this needs to be tagged, but might be 
 
         self.verts = self.verts.union(add_event._verts)
         self.tris = self.tris.union(add_event._tris)
+    
+    def move_vertex(self, vertex: Vertex, location: Any):
+
+        old_location = vertex.location
+
+        vertex.location = location
+
+        return ModifyEvent(vertex, old_location, location)
+    
+    def undo_move(self, modify_event: ModifyEvent):
+
+        modify_event.vertex.location = modify_event.from_location
+
+    def redo_move(self, modify_event: ModifyEvent):
+
+        modify_event.vertex.location = modify_event.to_location
